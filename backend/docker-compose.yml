@@ -1,0 +1,20 @@
+services:
+  db:
+    image: postgres:16
+    container_name: gameshelf-db
+    environment:
+      POSTGRES_USER: gameshelf
+      POSTGRES_PASSWORD: gameshelf
+      POSTGRES_DB: gameshelf
+    ports:
+      - "5432:5432"
+    volumes:
+      - gameshelf_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U gameshelf -d gameshelf"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  gameshelf_pgdata:
